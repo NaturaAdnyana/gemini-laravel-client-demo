@@ -1,0 +1,16 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "Tahapan registrasi"
+    },
+    {
+      "id": 2,
+      "question": "Jadwal Perkuliahan"
+    },
+    {
+      "id": 3,
+      "question": "Informasi Beasiswa"
+    }
+  ]
+}
