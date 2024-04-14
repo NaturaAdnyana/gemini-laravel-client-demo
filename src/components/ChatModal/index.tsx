@@ -2,7 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import SuggestionPill from "../SuggestionPill";
-import robot from "./../../robot.json";
+import ChatInput from "../ChatInput";
+import robot from "./../../assets/robot.json";
 import "./index.css";
 import initialQuestions from "../../data/initial-questions.json";
 
@@ -19,13 +20,16 @@ export default function index() {
           Perkenalkan saya IQA siap membantu anda👋
         </h1>
       </div>
-      <div className="bg-slate-50 w-96 h-96 rounded-[20px] relative">
-        <div className="absolute bottom-0 right-0 flex flex-wrap-reverse gap-2 justify-end items-end p-3">
-          {initialQuestions.questions.map((question, index) => (
-            <SuggestionPill key={question.id}>
-              {question.question}
-            </SuggestionPill>
-          ))}
+      <div className="bg-slate-50 w-96 h-96 rounded-[21px] relative overflow-y-auto">
+        <div className="absolute bottom-0 right-0 p-2 w-full">
+          <div className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1">
+            {initialQuestions.questions.map((question, index) => (
+              <SuggestionPill key={question.id}>
+                {question.question}
+              </SuggestionPill>
+            ))}
+          </div>
+          <ChatInput />
         </div>
       </div>
     </motion.div>
