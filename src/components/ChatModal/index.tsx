@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import SuggestionPill from "../SuggestionPill";
 import ChatInput from "../ChatInput";
+import ChatBubble from "../ChatBubble";
 import robot from "./../../assets/robot.json";
 import "./index.css";
 import initialQuestions from "../../data/initial-questions.json";
@@ -20,8 +21,30 @@ export default function index() {
           Perkenalkan saya IQA siap membantu anda👋
         </h1>
       </div>
-      <div className="bg-slate-50 w-96 h-96 rounded-[21px] relative overflow-y-auto">
-        <div className="absolute bottom-0 right-0 p-2 w-full">
+      <div className="bg-slate-50 max-w-[30rem] max-h-[30rem] rounded-[21px] relative overflow-hidden flex flex-col">
+        <div className="p-2 pb-3 w-full h-full overflow-y-auto flex flex-col">
+          <ChatBubble isUser={false}>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente
+            itaque incidunt illo?
+          </ChatBubble>
+          <ChatBubble isUser={true}>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente
+            itaque incidunt illo?
+          </ChatBubble>
+          <ChatBubble isUser={false}>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente
+            itaque incidunt illo?
+          </ChatBubble>
+          <ChatBubble isUser={false}>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente
+            itaque incidunt illo?
+          </ChatBubble>
+          <ChatBubble isUser={false}>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente
+            itaque incidunt illo?
+          </ChatBubble>
+        </div>
+        <div className="p-2 pt-3 w-full backdrop-blur-sm shadow-top bg-slate-50">
           <div className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1">
             {initialQuestions.questions.map((question, index) => (
               <SuggestionPill key={question.id}>
