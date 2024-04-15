@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import SuggestionPill from "../SuggestionPill";
@@ -10,21 +10,31 @@ import initialQuestions from "../../data/initial-questions.json";
 interface Message {
   id: number;
   message: string;
-  isUser?: boolean;
+  isUser?: string;
 }
 
 export default function index() {
   const messageContainer = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Message[]>([]);
 
+  useEffect(() => {
+    const initialMessage: Message = {
+      id: messages.length + 1,
+      message: "Halo, ada yang bisa saya bantu?",
+    };
+
+    setMessages([...messages, initialMessage]);
+  }, []);
+
   const handleMessageSubmit = (message: string) => {
     const newMessage: Message = {
       id: messages.length + 1,
       message: message,
-      isUser: true,
+      isUser: "client",
     };
 
     setMessages([...messages, newMessage]);
+
     if (messageContainer.current) {
       messageContainer.current.scrollTop =
         messageContainer.current.scrollHeight;
