@@ -5,7 +5,7 @@ import React from "react";
 
 export default function ChatbotButton() {
   return (
-    <div className="w-20 h-20 rounded-full bg-orange-700 flex items-center justify-center p-2">
+    <div className="w-14 h-14 rounded-full bg-orange-700 flex items-center justify-center p-2 md:w-20 sm:h-20">
       <Lottie animationData={robot} loop={true} />
     </div>
   );

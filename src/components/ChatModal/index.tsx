@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import SuggestionPill from "../SuggestionPill";
@@ -14,6 +14,7 @@ interface Message {
 }
 
 export default function index() {
+  const messageContainer = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Message[]>([]);
 
   const handleMessageSubmit = (message: string) => {
@@ -24,6 +25,10 @@ export default function index() {
     };
 
     setMessages([...messages, newMessage]);
+    if (messageContainer.current) {
+      messageContainer.current.scrollTop =
+        messageContainer.current.scrollHeight;
+    }
   };
   return (
     <motion.div className="modal-gradient mb-5 rounded-3xl p-1">
@@ -37,8 +42,11 @@ export default function index() {
           Perkenalkan saya IQA siap membantu anda👋
         </h1>
       </div>
-      <div className="bg-slate-50 max-w-[30rem] max-h-[60vh] rounded-[21px] relative overflow-hidden flex flex-col">
-        <div className="p-2 pb-3 w-full h-full min-h-48 overflow-y-auto flex flex-col">
+      <div className="bg-slate-50 max-w-[30rem] max-h-96 rounded-[21px] relative overflow-hidden flex flex-col">
+        <div
+          ref={messageContainer}
+          className="p-2 pb-5 w-full h-full min-h-48 overflow-y-auto flex flex-col"
+        >
           {messages.map((msg) => (
             <ChatBubble isUser={msg.isUser} key={msg.id}>
               {msg.message}
