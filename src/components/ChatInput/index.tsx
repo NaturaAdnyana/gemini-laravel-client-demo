@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Plane from "../../assets/Plane";
 
-export default function index() {
+const index: React.FC<{ onMessageSubmit: (message: string) => void }> = ({
+  onMessageSubmit,
+}) => {
+  const [inputText, setInputText] = useState<string>("");
+
+  const handleMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (inputText.trim() === "") return;
+
+    onMessageSubmit(inputText.trim());
+    setInputText("");
+  };
   return (
-    <form className="relative h-12" onSubmit={console.log("berhasil")}>
+    <form className="relative h-12" onSubmit={handleMessageSubmit}>
       <input
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
         type="text"
         className="w-full h-12 rounded-[16px] p-2 border"
         placeholder="Ketik disini..."
@@ -17,4 +30,6 @@ export default function index() {
       </button>
     </form>
   );
-}
+};
+
+export default index;
