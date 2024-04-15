@@ -34,12 +34,15 @@ export default function index() {
     };
 
     setMessages([...messages, newMessage]);
+  };
 
+  useEffect(() => {
     if (messageContainer.current) {
       messageContainer.current.scrollTop =
         messageContainer.current.scrollHeight;
     }
-  };
+  }, [messages]);
+
   return (
     <motion.div className="modal-gradient mb-5 rounded-3xl p-1">
       <div className="w-full p-5 flex flex-col items-center justify-center text-center text-white">
