@@ -19,7 +19,7 @@ const index: React.FC<{ onMessageSubmit: (message: string) => void }> = ({
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
         type="text"
-        className="w-full h-12 rounded-[16px] p-2 border"
+        className="w-full h-12 rounded-[16px] p-2 border focus:outline-none"
         placeholder="Ketik disini..."
       />
       <button
