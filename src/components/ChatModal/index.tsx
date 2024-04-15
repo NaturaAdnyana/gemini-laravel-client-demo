@@ -13,7 +13,7 @@ interface Message {
   id: number;
   message: string;
   isUser?: string;
-  link?: string;
+  image?: string;
 }
 
 export default function index() {
@@ -51,7 +51,7 @@ export default function index() {
         const botMessage = response.data.map((item: any, index: number) => ({
           id: messages.length + index + 2,
           message: item.text || undefined,
-          link: item.image || undefined,
+          image: item.image || undefined,
         }));
         setMessages((prevMessages) => [...prevMessages, ...botMessage]);
         setIsLoaded(true);
@@ -91,13 +91,13 @@ export default function index() {
               isLoaded={true}
               isUser={msg.isUser}
               key={msg.id}
-              link={msg.link}
+              image={msg.image}
             >
               {msg.message}
             </ChatBubble>
           ))}
           {!isLoaded && (
-            <ChatBubble isLoaded={false} isUser={false} link={null}>
+            <ChatBubble isLoaded={false} isUser={false} image={null}>
               <Lottie animationData={textLoading} loop={true} />
             </ChatBubble>
           )}
