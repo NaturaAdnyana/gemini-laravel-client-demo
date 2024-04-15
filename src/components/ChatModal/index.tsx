@@ -1,21 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import SuggestionPill from "../SuggestionPill";
 import ChatInput from "../ChatInput";
 import ChatBubble from "../ChatBubble";
 import robot from "./../../assets/robot.json";
+import textLoading from "./../../assets/text-loading.json";
 import "./index.css";
 import initialQuestions from "../../data/initial-questions.json";
 interface Message {
   id: number;
   message: string;
   isUser?: string;
+  link?: string;
 }
 
 export default function index() {
   const messageContainer = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const initialMessage: Message = {
@@ -24,6 +28,7 @@ export default function index() {
     };
 
     setMessages([...messages, initialMessage]);
+    setIsLoaded(true);
   }, []);
 
   const handleMessageSubmit = (message: string) => {
@@ -33,7 +38,27 @@ export default function index() {
       isUser: "client",
     };
 
-    setMessages([...messages, newMessage]);
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    setIsLoaded(false);
+
+    axios
+      .post("http://localhost:5005/webhooks/rest/webhook", {
+        sender: "client",
+        message: message,
+      })
+      .then(function (response) {
+        console.log(response);
+        const botMessage = response.data.map((item: any, index: number) => ({
+          id: messages.length + index + 2,
+          message: item.text || undefined,
+          link: item.image || undefined,
+        }));
+        setMessages((prevMessages) => [...prevMessages, ...botMessage]);
+        setIsLoaded(true);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -41,6 +66,7 @@ export default function index() {
       messageContainer.current.scrollTop =
         messageContainer.current.scrollHeight;
     }
+    console.log(messages);
   }, [messages]);
 
   return (
@@ -61,10 +87,20 @@ export default function index() {
           className="p-2 pb-5 w-full h-full min-h-48 overflow-y-auto flex flex-col"
         >
           {messages.map((msg) => (
-            <ChatBubble isUser={msg.isUser} key={msg.id}>
+            <ChatBubble
+              isLoaded={true}
+              isUser={msg.isUser}
+              key={msg.id}
+              link={msg.link}
+            >
               {msg.message}
             </ChatBubble>
           ))}
+          {!isLoaded && (
+            <ChatBubble isLoaded={false} isUser={false} link={null}>
+              <Lottie animationData={textLoading} loop={true} />
+            </ChatBubble>
+          )}
         </div>
         <div className="p-2 pt-3 w-full backdrop-blur-sm shadow-top bg-slate-50">
           <div className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1">
