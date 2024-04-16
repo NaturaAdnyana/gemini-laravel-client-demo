@@ -24,7 +24,8 @@ export default function index() {
   useEffect(() => {
     const initialMessage: Message = {
       id: messages.length + 1,
-      message: "Halo, ada yang bisa saya bantu?",
+      message:
+        "Selamat datang! Saya IQA siap membantu Anda. Silakan ajukan pertanyaan Anda di kolom di bawah ini. Namun, jika Anda perlu menghubungi admin, Anda dapat melakukannya melalui tautan berikut: https://wa.me/6281339822383",
     };
 
     setMessages([...messages, initialMessage]);
@@ -81,10 +82,10 @@ export default function index() {
           Perkenalkan saya IQA siap membantu anda👋
         </h1>
       </div>
-      <div className="bg-slate-50 max-w-[30rem] max-h-96 rounded-[21px] relative overflow-hidden flex flex-col">
+      <div className="bg-slate-50 max-w-[30rem] h-[25rem] rounded-[21px] relative overflow-hidden flex flex-col">
         <div
           ref={messageContainer}
-          className="p-2 pb-5 w-full h-full min-h-48 overflow-y-auto flex flex-col"
+          className="p-2 pb-5 w-full h-full overflow-y-auto flex flex-col"
         >
           {messages.map((msg) => (
             <ChatBubble
