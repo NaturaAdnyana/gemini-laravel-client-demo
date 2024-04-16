@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { motion } from "framer-motion";
+import { delay, motion } from "framer-motion";
 import Lottie from "lottie-react";
 import SuggestionPill from "../SuggestionPill";
 import ChatInput from "../ChatInput";
@@ -77,8 +77,16 @@ export default function index() {
   }, [messages]);
 
   return (
-    <motion.div className="modal-gradient mb-5 rounded-3xl p-1 w-full">
-      <div className="w-full p-5 flex flex-col items-center justify-center text-center text-white">
+    <motion.div
+      className="modal-gradient mb-5 rounded-3xl p-1 w-full"
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+    >
+      <motion.div
+        className="w-full p-5 flex flex-col items-center justify-center text-center text-white"
+        initial={{ y: 50 }}
+        animate={{ y: 0, transition: { delay: 0.1 } }}
+      >
         <div className="w-14 h-14">
           <Lottie animationData={robot} loop={true} />
         </div>
@@ -87,7 +95,7 @@ export default function index() {
           <br />
           Saya IQA siap membantu anda 💪🏻
         </h1>
-      </div>
+      </motion.div>
       <div className="bg-slate-50 w-full h-[25rem] rounded-[21px] relative overflow-hidden flex flex-col">
         <div
           ref={messageContainer}
@@ -111,7 +119,9 @@ export default function index() {
         </div>
         <div className="p-2 pt-3 w-full backdrop-blur-sm shadow-top bg-slate-50">
           {needSuggestions && (
-            <div className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1">
+            <div
+              className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1"
+            >
               {initialQuestions.questions.map((question) => (
                 <SuggestionPill
                   key={question.id}
