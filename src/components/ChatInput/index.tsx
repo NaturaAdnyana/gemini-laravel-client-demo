@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import Plane from "../../assets/Plane";
 
-const index: React.FC<{ onMessageSubmit: (message: string) => void }> = ({
-  onMessageSubmit,
-}) => {
+const index: React.FC<{
+  onMessageSubmit: (message: string) => void;
+  radar: boolean;
+}> = ({ onMessageSubmit, radar }) => {
   const [inputText, setInputText] = useState<string>("");
 
   const handleMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (inputText.trim() === "") return;
 
     onMessageSubmit(inputText.trim());
@@ -20,7 +22,8 @@ const index: React.FC<{ onMessageSubmit: (message: string) => void }> = ({
         onChange={(e) => setInputText(e.target.value)}
         type="text"
         className="w-full h-12 rounded-[16px] p-2 border focus:outline-none"
-        placeholder="Ketik disini..."
+        placeholder={radar ? "Mengirim pesan..." : "Ketik pesan..."}
+        disabled={radar}
       />
       <button
         type="submit"

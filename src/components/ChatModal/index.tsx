@@ -21,6 +21,7 @@ export default function index() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [needSuggestions, setNeedSuggestions] = useState(true);
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     const initialMessage: Message = {
@@ -34,6 +35,7 @@ export default function index() {
   }, []);
 
   const handleMessageSubmit = (message: string) => {
+    setIsSending(true);
     setNeedSuggestions(false);
 
     const newMessage: Message = {
@@ -59,6 +61,7 @@ export default function index() {
         }));
         setMessages((prevMessages) => [...prevMessages, ...botMessage]);
         setIsLoaded(true);
+        setIsSending(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -119,7 +122,7 @@ export default function index() {
               ))}
             </div>
           )}
-          <ChatInput onMessageSubmit={handleMessageSubmit} />
+          <ChatInput radar={isSending} onMessageSubmit={handleMessageSubmit} />
         </div>
       </div>
     </motion.div>
