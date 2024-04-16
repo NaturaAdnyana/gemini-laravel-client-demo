@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { delay, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import SuggestionPill from "../SuggestionPill";
 import ChatInput from "../ChatInput";
@@ -119,9 +119,7 @@ export default function index() {
         </div>
         <div className="p-2 pt-3 w-full backdrop-blur-sm shadow-top bg-slate-50">
           {needSuggestions && (
-            <div
-              className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1"
-            >
+            <div className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1">
               {initialQuestions.questions.map((question) => (
                 <SuggestionPill
                   key={question.id}
