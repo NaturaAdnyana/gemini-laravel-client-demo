@@ -20,6 +20,7 @@ export default function index() {
   const messageContainer = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [needSuggestions, setNeedSuggestions] = useState(true);
 
   useEffect(() => {
     const initialMessage: Message = {
@@ -33,6 +34,8 @@ export default function index() {
   }, []);
 
   const handleMessageSubmit = (message: string) => {
+    setNeedSuggestions(false);
+
     const newMessage: Message = {
       id: messages.length + 1,
       message: message,
@@ -71,7 +74,7 @@ export default function index() {
   }, [messages]);
 
   return (
-    <motion.div className="modal-gradient mb-5 rounded-3xl p-1">
+    <motion.div className="modal-gradient mb-5 rounded-3xl p-1 w-full">
       <div className="w-full p-5 flex flex-col items-center justify-center text-center text-white">
         <div className="w-14 h-14">
           <Lottie animationData={robot} loop={true} />
@@ -79,10 +82,10 @@ export default function index() {
         <h1 className="text-sm leading-6">
           <b>Halo Civitas INSTIKI</b>
           <br />
-          Perkenalkan saya IQA siap membantu anda👋
+          Saya IQA siap membantu anda 💪🏻
         </h1>
       </div>
-      <div className="bg-slate-50 max-w-[30rem] h-[25rem] rounded-[21px] relative overflow-hidden flex flex-col">
+      <div className="bg-slate-50 w-full h-[25rem] rounded-[21px] relative overflow-hidden flex flex-col">
         <div
           ref={messageContainer}
           className="p-2 pb-5 w-full h-full overflow-y-auto flex flex-col"
@@ -104,13 +107,18 @@ export default function index() {
           )}
         </div>
         <div className="p-2 pt-3 w-full backdrop-blur-sm shadow-top bg-slate-50">
-          <div className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1">
-            {initialQuestions.questions.map((question, index) => (
-              <SuggestionPill key={question.id}>
-                {question.question}
-              </SuggestionPill>
-            ))}
-          </div>
+          {needSuggestions && (
+            <div className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1">
+              {initialQuestions.questions.map((question) => (
+                <SuggestionPill
+                  key={question.id}
+                  onMessageSubmit={handleMessageSubmit}
+                >
+                  {question.question}
+                </SuggestionPill>
+              ))}
+            </div>
+          )}
           <ChatInput onMessageSubmit={handleMessageSubmit} />
         </div>
       </div>

@@ -1,9 +1,28 @@
 import React from "react";
 
-export default function index({ children }) {
+const index: React.FC<{
+  onMessageSubmit: (message: string) => void;
+  children: React.ReactNode;
+}> = ({ onMessageSubmit, children }) => {
+  const handleMessageSubmit = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+
+    if (typeof children === "string") {
+      onMessageSubmit(children);
+    } else {
+      console.error("Invalid child type. Expected string.");
+    }
+  };
   return (
-    <div className="border border-yellow-600 rounded-full py-2 px-3 text-xs text-yellow-600 bg-white whitespace-nowrap">
+    <button
+      className="border border-yellow-600 rounded-full py-2 px-3 text-xs text-yellow-600 bg-white whitespace-nowrap transition-colors hover:bg-orange-100"
+      onClick={handleMessageSubmit}
+    >
       {children}
-    </div>
+    </button>
   );
-}
+};
+
+export default index;

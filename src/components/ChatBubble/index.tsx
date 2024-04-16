@@ -20,11 +20,11 @@ const renderLink = ({ attributes, content }) => {
 export default function index({ children, isUser, isLoaded, image }) {
   return (
     <div
-      className={`m-2 py-2 px-5 rounded-[14px] max-w-72 shadow-sm text-sm ${
+      className={`m-1 p-3 rounded-[14px] max-w-72 shadow-sm text-sm ${
         isUser ? "self-end bg-white" : "self-start bg-orange-100"
       }`}
     >
-      {image && <img src={image} />}
+      {image && <img className="rounded-lg" src={image} />}
       {isLoaded ? (
         <Linkify options={{ render: renderLink }}>{children}</Linkify>
       ) : (
