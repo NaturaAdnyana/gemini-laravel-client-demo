@@ -53,7 +53,6 @@ export default function index() {
         message: message,
       })
       .then(function (response) {
-        console.log(response);
         const botMessage = response.data.map((item: any, index: number) => ({
           id: messages.length + index + 2,
           message: item.text || undefined,
@@ -65,6 +64,21 @@ export default function index() {
       })
       .catch(function (error) {
         console.log(error);
+        const errorMessage = [
+          {
+            id: messages.length + 2,
+            message:
+              "Mohon maaf, saat ini IQA mengalami gangguan, mohon doanya agar bisa segera pulih 🥲🙏",
+          },
+          {
+            id: messages.length + 3,
+            message:
+              "Jika membutuhkan informasi segera, silahkan menghubungi Information Center kami: https://wa.me/6281339822383",
+          },
+        ];
+        setMessages((prevMessages) => [...prevMessages, ...errorMessage]);
+        setIsLoaded(true);
+        setIsSending(false);
       });
   };
 
@@ -73,7 +87,7 @@ export default function index() {
       messageContainer.current.scrollTop =
         messageContainer.current.scrollHeight;
     }
-    console.log(messages);
+    // console.log(messages);
   }, [messages]);
 
   return (

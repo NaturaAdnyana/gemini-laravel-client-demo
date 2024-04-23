@@ -11,7 +11,7 @@ const renderLink = ({ attributes, content }) => {
       href={href}
       {...props}
       target="_blank"
-      className="text-cyan-600 underline"
+      className="text-cyan-600 underline break-words after:content-['_↗'] after:text-xs"
     >
       {content}
     </a>
