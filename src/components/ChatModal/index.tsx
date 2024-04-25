@@ -118,6 +118,7 @@ export default function index() {
       className="modal-gradient mb-5 rounded-3xl p-1 w-full"
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0 }}
     >
       <motion.div
         className="w-full p-5 flex flex-col items-center justify-center text-center text-white"
@@ -134,7 +135,7 @@ export default function index() {
         </h1>
       </motion.div>
       <div className="bg-slate-50 w-full h-[25rem] rounded-[21px] relative overflow-hidden flex flex-col">
-        <div
+        <motion.div
           ref={messageContainer}
           className="p-2 pb-5 w-full h-full overflow-y-auto flex flex-col"
         >
@@ -153,7 +154,7 @@ export default function index() {
               <Lottie animationData={textLoading} loop={true} />
             </ChatBubble>
           )}
-        </div>
+        </motion.div>
         <div className="p-2 pt-3 w-full backdrop-blur-sm shadow-top bg-slate-50">
           {needSuggestions && (
             <div className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1">
