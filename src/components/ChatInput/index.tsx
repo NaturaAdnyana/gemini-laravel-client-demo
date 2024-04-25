@@ -3,8 +3,8 @@ import Plane from "../../assets/Plane";
 
 const index: React.FC<{
   onMessageSubmit: (message: string) => void;
-  radar: boolean;
-}> = ({ onMessageSubmit, radar }) => {
+  isSending: boolean;
+}> = ({ onMessageSubmit, isSending }) => {
   const [inputText, setInputText] = useState<string>("");
 
   const handleMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -15,21 +15,29 @@ const index: React.FC<{
     onMessageSubmit(inputText.trim());
     setInputText("");
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleMessageSubmit(e as any);
+    }
+  };
+
   return (
-    <form className="relative h-12" onSubmit={handleMessageSubmit}>
-      <input
+    <form className="flex gap-2" onSubmit={handleMessageSubmit}>
+      <textarea
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
-        type="text"
-        className="w-full h-12 rounded-[16px] p-2 border focus:outline-none"
-        placeholder={radar ? "Mengirim pesan..." : "Ketik pesan..."}
-        disabled={radar}
+        onKeyDown={handleKeyDown}
+        className="w-full rounded-[1.5rem] py-3 px-4 border focus:outline-none min-h-12 h-12 max-h-24 scroll-py-3"
+        placeholder={isSending ? "Mengirim pesan..." : "Ketik pesan..."}
+        disabled={isSending}
       />
       <button
         type="submit"
-        className="absolute right-1 top-1/2 -translate-y-1/2 bg-orange-700 w-14 h-10 flex items-center justify-center rounded-[14px] transition-colors hover:bg-orange-600"
+        className=" bg-orange-700 w-14 h-12 flex items-center justify-center rounded-full transition-all hover:bg-orange-600 hover:-rotate-45"
       >
-        <Plane className="stroke-white w-6 h-6" />
+        <Plane className="stroke-white w-5 h-5 -rotate-12" />
       </button>
     </form>
   );

@@ -167,7 +167,10 @@ export default function index() {
               ))}
             </div>
           )}
-          <ChatInput radar={isSending} onMessageSubmit={handleMessageSubmit} />
+          <ChatInput
+            isSending={isSending}
+            onMessageSubmit={handleMessageSubmit}
+          />
         </div>
       </div>
     </motion.div>
