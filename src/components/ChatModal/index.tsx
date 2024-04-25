@@ -16,12 +16,19 @@ interface Message {
   image?: string;
 }
 
+interface Question {
+  id: number;
+  title: string;
+  payload: string;
+}
+
 export default function index() {
   const messageContainer = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [needSuggestions, setNeedSuggestions] = useState(true);
   const [isSending, setIsSending] = useState(false);
+  const [suggestions, setSuggestions] = useState<Question[]>([]);
+  const [needSuggestions, setNeedSuggestions] = useState(true);
 
   useEffect(() => {
     const initialMessage: Message = {
@@ -32,11 +39,14 @@ export default function index() {
 
     setMessages([...messages, initialMessage]);
     setIsLoaded(true);
+    setSuggestions(initialQuestions.questions);
   }, []);
 
-  const handleMessageSubmit = (message: string) => {
+  const handleMessageSubmit = (payload: string, title?: string) => {
     setIsSending(true);
     setNeedSuggestions(false);
+
+    let message = title ? title : payload;
 
     const newMessage: Message = {
       id: messages.length + 1,
@@ -53,11 +63,24 @@ export default function index() {
         message: message,
       })
       .then(function (response) {
-        const botMessage = response.data.map((item: any, index: number) => ({
-          id: messages.length + index + 2,
-          message: item.text || undefined,
-          image: item.image || undefined,
-        }));
+        const botMessage = response.data.map((item: any, index: number) => {
+          const messageData: Message = {
+            id: messages.length + index + 2,
+            message: item.text || undefined,
+            image: item.image || undefined,
+          };
+          if (item.buttons && item.buttons.length > 0) {
+            setNeedSuggestions(true);
+            setSuggestions(
+              item.buttons.map((button: any, index: number) => ({
+                id: index + 1,
+                title: button.title,
+                payload: button.payload,
+              }))
+            );
+          }
+          return messageData;
+        });
         setMessages((prevMessages) => [...prevMessages, ...botMessage]);
         setIsLoaded(true);
         setIsSending(false);
@@ -87,7 +110,7 @@ export default function index() {
       messageContainer.current.scrollTop =
         messageContainer.current.scrollHeight;
     }
-    // console.log(messages);
+    console.log(messages);
   }, [messages]);
 
   return (
@@ -134,13 +157,13 @@ export default function index() {
         <div className="p-2 pt-3 w-full backdrop-blur-sm shadow-top bg-slate-50">
           {needSuggestions && (
             <div className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1">
-              {initialQuestions.questions.map((question) => (
+              {suggestions.map((suggestion) => (
                 <SuggestionPill
-                  key={question.id}
+                  key={suggestion.id}
+                  title={suggestion.title}
+                  payload={suggestion.payload}
                   onMessageSubmit={handleMessageSubmit}
-                >
-                  {question.question}
-                </SuggestionPill>
+                />
               ))}
             </div>
           )}

@@ -2,15 +2,18 @@
   "questions": [
     {
       "id": 1,
-      "question": "Tahapan registrasi"
+      "title": "Tahapan registrasi asdad",
+      "payload": "/registrasi"
     },
     {
       "id": 2,
-      "question": "Jadwal Perkuliahan"
+      "title": "Jadwal Perkuliahan adsad",
+      "payload": "/jadwal_kuliah"
     },
     {
       "id": 3,
-      "question": "Informasi Beasiswa"
+      "title": "Biaya Daftar Ulangasdads",
+      "payload": "/biaya_daftar_ulang"
     }
   ]
 }

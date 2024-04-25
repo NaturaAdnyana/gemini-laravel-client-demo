@@ -7,19 +7,15 @@ const item = {
 };
 
 const index: React.FC<{
-  onMessageSubmit: (message: string) => void;
-  children: React.ReactNode;
-}> = ({ onMessageSubmit, children }) => {
+  onMessageSubmit: (message: string, title: string) => void;
+  title: string;
+  payload: string;
+}> = ({ onMessageSubmit, title, payload }) => {
   const handleMessageSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-
-    if (typeof children === "string") {
-      onMessageSubmit(children);
-    } else {
-      console.error("Invalid child type. Expected string.");
-    }
+    onMessageSubmit(payload, title);
   };
   return (
     <motion.button
@@ -29,7 +25,7 @@ const index: React.FC<{
       initial="hidden"
       animate="show"
     >
-      {children}
+      {title}
     </motion.button>
   );
 };
