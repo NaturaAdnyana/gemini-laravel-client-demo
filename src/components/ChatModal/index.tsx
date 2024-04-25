@@ -110,7 +110,7 @@ export default function index() {
       messageContainer.current.scrollTop =
         messageContainer.current.scrollHeight;
     }
-    console.log(messages);
+    // console.log(messages);
   }, [messages]);
 
   return (

@@ -2,17 +2,17 @@
   "questions": [
     {
       "id": 1,
-      "title": "Tahapan registrasi asdad",
+      "title": "Tahapan registrasi",
       "payload": "/registrasi"
     },
     {
       "id": 2,
-      "title": "Jadwal Perkuliahan adsad",
+      "title": "Jadwal Perkuliahan",
       "payload": "/jadwal_kuliah"
     },
     {
       "id": 3,
-      "title": "Biaya Daftar Ulangasdads",
+      "title": "Biaya Daftar Ulang",
       "payload": "/biaya_daftar_ulang"
     }
   ]
