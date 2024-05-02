@@ -11,6 +11,9 @@ export default defineConfig({
       input: {
         app: "./src/main.jsx",
       },
+      output: {
+        entryFileNames: "instiki-chatbot.js",
+      },
     },
   },
   base: "https://cdn.jsdelivr.net/gh/NaturaAdnyana/instiki-chatbot-client/dist/",
