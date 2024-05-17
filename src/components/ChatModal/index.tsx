@@ -24,20 +24,31 @@ interface Question {
 
 export default function index() {
   const messageContainer = useRef<HTMLDivElement>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [suggestions, setSuggestions] = useState<Question[]>([]);
   const [needSuggestions, setNeedSuggestions] = useState(true);
 
+  const [messages, setMessages] = useState<Message[]>([]);
   useEffect(() => {
-    const initialMessage: Message = {
-      id: messages.length + 1,
-      message:
-        "Selamat datang! Saya IQA siap membantu Anda. Silakan ajukan pertanyaan Anda di kolom di bawah ini. Namun, jika Anda perlu menghubungi admin, Anda dapat melakukannya melalui tautan berikut: https://wa.me/6281339822383",
-    };
+    const initialMessage: Message[] = [
+      {
+        id: messages.length + 1,
+        message: "Selamat datang, saya IQA siap melayani anda👋",
+      },
+      {
+        id: messages.length + 2,
+        message:
+          "Jika anda mahasiswa INSTIKI, silahkan inputkan Nama dan NIM dengan format 'nama saya <nama anda> dan nim <nim anda>'.",
+      },
+      {
+        id: messages.length + 3,
+        message:
+          "Jika tidak, silakan langsung ajukan pertanyaan Anda di kolom di bawah ini.",
+      },
+    ];
 
-    setMessages([...messages, initialMessage]);
+    setMessages([...messages, ...initialMessage]);
     setIsLoaded(true);
     setSuggestions(initialQuestions.questions);
   }, []);
