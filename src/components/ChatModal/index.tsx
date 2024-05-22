@@ -9,6 +9,7 @@ import robot from "./../../assets/robot.json";
 import textLoading from "./../../assets/text-loading.json";
 import "./index.css";
 import initialQuestions from "../../data/initial-questions.json";
+import { faker } from "@faker-js/faker";
 interface Message {
   id: number;
   message: string;
@@ -24,6 +25,7 @@ interface Question {
 
 export default function index() {
   const messageContainer = useRef<HTMLDivElement>(null);
+  const [user, setUser] = useState<string>("");
   const [isLoaded, setIsLoaded] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [suggestions, setSuggestions] = useState<Question[]>([]);
@@ -39,7 +41,7 @@ export default function index() {
       {
         id: messages.length + 2,
         message:
-          "Jika anda mahasiswa INSTIKI, silahkan kirimkan data (Nama) dan (NIM) anda terlebih dahulu.",
+          "Jika anda mahasiswa INSTIKI, silahkan kirimkan data Nama dan NIM anda terlebih dahulu.",
       },
       {
         id: messages.length + 3,
@@ -51,6 +53,7 @@ export default function index() {
     setMessages([...messages, ...initialMessage]);
     setIsLoaded(true);
     setSuggestions(initialQuestions.questions);
+    setUser(faker.person.firstName());
   }, []);
 
   const handleMessageSubmit = (payload: string, title?: string) => {
@@ -62,7 +65,7 @@ export default function index() {
     const newMessage: Message = {
       id: messages.length + 1,
       message: message,
-      isUser: "client",
+      isUser: user,
     };
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -70,7 +73,7 @@ export default function index() {
 
     axios
       .post("http://localhost:5005/webhooks/rest/webhook", {
-        sender: "client",
+        sender: user,
         message: message,
       })
       .then(function (response) {
