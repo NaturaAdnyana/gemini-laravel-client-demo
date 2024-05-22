@@ -13,7 +13,8 @@ const renderLink = ({ attributes, content }) => {
       target="_blank"
       className="text-cyan-600 underline break-words after:content-['_↗'] after:text-xs"
     >
-      {content}
+      {/* {content} */}
+      link
     </a>
   );
 };
