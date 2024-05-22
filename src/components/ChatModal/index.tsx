@@ -39,12 +39,12 @@ export default function index() {
       {
         id: messages.length + 2,
         message:
-          "Jika anda mahasiswa INSTIKI, silahkan inputkan Nama dan NIM dengan format 'nama saya <nama anda> dan nim <nim anda>'.",
+          "Jika anda mahasiswa INSTIKI, silahkan kirimkan data (Nama) dan (NIM) anda terlebih dahulu.",
       },
       {
         id: messages.length + 3,
         message:
-          "Jika tidak, silakan langsung ajukan pertanyaan Anda di kolom di bawah ini.",
+          "Jika anda pengunjung, silakan langsung ajukan pertanyaan anda di kolom di bawah ini😊",
       },
     ];
 
@@ -142,7 +142,7 @@ export default function index() {
         <h1 className="text-sm leading-6">
           <b>Halo Civitas INSTIKI</b>
           <br />
-          Saya IQA siap membantu anda 💪🏻
+          Saya IQA siap membantu anda😉
         </h1>
       </motion.div>
       <div className="bg-slate-50 w-full h-[25rem] rounded-[21px] relative overflow-hidden flex flex-col">
