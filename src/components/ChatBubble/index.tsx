@@ -29,7 +29,21 @@ export default function index({ children, isUser, isLoaded, image }) {
       animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
       exit={{ opacity: 0, y: 50 }}
     >
-      {image && <img className="rounded-lg" src={image} />}
+      {image && (
+        <a
+          className="relative"
+          href={image}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img className="rounded-lg" src={image} />
+          <div className="absolute flex justify-center items-center rounded-lg top-0 left-0 w-full h-full transition-opacity bg-[#0000006d] opacity-0 hover:opacity-100">
+            <span className="text-white after:content-['_↗'] underline underline-offset-2">
+              Open Image
+            </span>
+          </div>
+        </a>
+      )}
       {isLoaded ? (
         <Linkify options={{ render: renderLink }}>{children}</Linkify>
       ) : (
