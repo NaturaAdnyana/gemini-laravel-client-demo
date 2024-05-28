@@ -10,7 +10,7 @@ function App() {
     setIsModalOpen(!isModalOpen);
   };
   return (
-    <div className="fixed bottom-5 right-0 p-2 flex flex-col items-end w-full md:w-[30rem] md:right-5">
+    <div className="fixed bottom-5 right-0 p-2 flex flex-col items-end w-full md:w-[34rem] md:right-5">
       <AnimatePresence>{isModalOpen && <ChatModal />}</AnimatePresence>
       <ChatbotButton onClick={toggleModal} isOpen={isModalOpen} />
     </div>

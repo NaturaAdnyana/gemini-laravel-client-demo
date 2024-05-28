@@ -36,7 +36,8 @@ export default function index() {
     const initialMessage: Message[] = [
       {
         id: messages.length + 1,
-        message: "Selamat datang, saya IQA siap melayani anda👋",
+        message:
+          "Selamat datang, saya IQA (INSTIKI Quick Assistant) siap melayani anda👋",
       },
       {
         id: messages.length + 2,
@@ -45,8 +46,12 @@ export default function index() {
       },
       {
         id: messages.length + 3,
+        message: "Contoh: 'Nama saya [nama anda] NIM [NIM anda]'",
+      },
+      {
+        id: messages.length + 4,
         message:
-          "Jika anda pengunjung, silakan langsung ajukan pertanyaan anda di kolom di bawah ini😊",
+          "Namun, jika anda pengunjung, silahkan langsung ajukan pertanyaan anda di kolom di bawah ini😊",
       },
     ];
 
@@ -148,7 +153,7 @@ export default function index() {
           Saya IQA siap membantu anda😉
         </h1>
       </motion.div>
-      <div className="bg-slate-50 w-full h-[25rem] rounded-[21px] relative overflow-hidden flex flex-col">
+      <div className="bg-slate-100 w-full h-[25rem] rounded-[21px] relative overflow-hidden flex flex-col">
         <motion.div
           ref={messageContainer}
           className="p-2 pb-5 w-full h-full overflow-y-auto flex flex-col"

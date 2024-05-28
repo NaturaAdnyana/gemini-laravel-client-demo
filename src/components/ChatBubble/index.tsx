@@ -11,7 +11,7 @@ const renderLink = ({ attributes, content }) => {
       href={href}
       {...props}
       target="_blank"
-      className="text-cyan-600 underline break-words after:content-['_↗'] after:text-xs"
+      className="text-cyan-600 underline break-words after:content-['↗'] after:text-xs"
     >
       {/* {content} */}
       link
@@ -22,8 +22,10 @@ const renderLink = ({ attributes, content }) => {
 export default function index({ children, isUser, isLoaded, image }) {
   return (
     <motion.div
-      className={`m-1 p-3 rounded-[14px] max-w-72 shadow-sm text-sm ${
-        isUser ? "self-end bg-white" : "self-start bg-orange-100"
+      className={`m-1 p-3 rounded-br-[14px] rounded-bl-[14px] max-w-96 shadow-sm text-[0.85rem] ${
+        isUser
+          ? "self-end bg-white rounded-tl-[14px]"
+          : "self-start bg-orange-100 rounded-tr-[14px]"
       }`}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
