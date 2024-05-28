@@ -23,7 +23,7 @@ const renderLink = ({ attributes, content }) => {
 export default function index({ children, isUser, isLoaded, image }) {
   return (
     <motion.div
-      className={`m-1 p-3 rounded-br-[14px] rounded-bl-[14px] max-w-96 bubble-shadow text-[0.85rem] ${
+      className={`m-1 p-2 rounded-br-[14px] rounded-bl-[14px] max-w-96 bubble-shadow text-[0.85rem] ${
         isUser
           ? "self-end bg-white rounded-tl-[14px] rounded-tr-[4px]"
           : "self-start bg-orange-200 rounded-tr-[14px] rounded-tl-[4px]"
