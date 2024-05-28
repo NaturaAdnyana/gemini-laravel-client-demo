@@ -153,7 +153,7 @@ export default function index() {
           Saya IQA siap membantu anda😉
         </h1>
       </motion.div>
-      <div className="bg-slate-100 w-full h-[25rem] rounded-[21px] relative overflow-hidden flex flex-col">
+      <div className="bg-slate-50 w-full h-[25rem] rounded-[21px] relative overflow-hidden flex flex-col">
         <motion.div
           ref={messageContainer}
           className="p-2 pb-5 w-full h-full overflow-y-auto flex flex-col"
