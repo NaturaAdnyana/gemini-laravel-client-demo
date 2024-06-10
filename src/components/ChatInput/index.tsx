@@ -35,7 +35,7 @@ const index: React.FC<{
     };
 
     recognitionInstance.onerror = (event: SpeechRecognitionErrorEvent) => {
-      console.error("Error occurred in recognition: ", event.error);
+      alert(`Error occurred in recognition: ${event.error}`);
     };
 
     recognitionInstance.onend = () => {
