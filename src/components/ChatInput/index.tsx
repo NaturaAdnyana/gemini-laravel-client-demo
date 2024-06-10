@@ -29,7 +29,7 @@ const index: React.FC<{
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="w-full rounded-[1.5rem] py-3 px-4 border focus:outline-none min-h-12 h-12 max-h-24 scroll-py-3"
+        className="w-full rounded-[1.5rem] py-[0.65rem] px-4 border focus:outline-none min-h-12 h-12 max-h-24 scroll-py-3"
         placeholder={isSending ? "Mengirim pesan..." : "Ketik pesan..."}
         disabled={isSending}
       />

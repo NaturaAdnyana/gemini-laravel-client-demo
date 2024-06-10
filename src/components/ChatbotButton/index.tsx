@@ -8,7 +8,7 @@ import React from "react";
 export default function ChatbotButton({ onClick, isOpen }) {
   return (
     <button
-      className="w-14 h-14 rounded-full bg-orange-700 flex items-center justify-center p-2 md:w-20 sm:h-20 transition-colors hover:bg-orange-600"
+      className="w-16 h-16 rounded-full bg-orange-700 flex items-center justify-center p-2 md:w-20 sm:h-20 transition-colors hover:bg-orange-600"
       onClick={onClick}
     >
       {isOpen ? (
