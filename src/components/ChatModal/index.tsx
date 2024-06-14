@@ -77,7 +77,7 @@ export default function index() {
     setIsLoaded(false);
 
     axios
-      .post("http://localhost:5005/webhooks/rest/webhook", {
+      .post("http://eventnya.id:50/webhooks/rest/webhook", {
         sender: user,
         message: message,
       })

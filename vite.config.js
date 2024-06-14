@@ -12,7 +12,7 @@ export default defineConfig({
         app: "./src/main.jsx",
       },
       output: {
-        entryFileNames: "instiki-chatbot.js",
+        entryFileNames: "instiki-chatbot-alpha.js",
       },
     },
   },
