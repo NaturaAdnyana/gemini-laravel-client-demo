@@ -9,6 +9,7 @@ import robot from "./../../assets/robot.json";
 import textLoading from "./../../assets/text-loading.json";
 import "./index.css";
 import initialQuestions from "../../data/initial-questions.json";
+import apiEndpoint from "../../data/api-endpoint.json";
 import { faker } from "@faker-js/faker";
 interface Message {
   id: number;
@@ -77,7 +78,7 @@ export default function index() {
     setIsLoaded(false);
 
     axios
-      .post("http://eventnya.id:50/webhooks/rest/webhook", {
+      .post(apiEndpoint.url, {
         sender: user,
         message: message,
       })
