@@ -1,32 +1,29 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Lottie from "lottie-react";
 import SuggestionPill from "../SuggestionPill";
 import ChatInput from "../ChatInput";
 import ChatBubble from "../ChatBubble";
+import ChatIntro from "../ChatIntro";
 import robot from "./../../assets/robot.json";
 import textLoading from "./../../assets/text-loading.json";
 import "./index.css";
 import initialQuestions from "../../data/initial-questions.json";
-import apiEndpoint from "../../data/api-endpoint.json";
-import { faker } from "@faker-js/faker";
 interface Message {
-  id: number;
   message: string;
   isUser?: string;
-  image?: string;
 }
 
 interface Question {
   id: number;
-  title: string;
-  payload: string;
+  message: string;
 }
 
 export default function index() {
   const messageContainer = useRef<HTMLDivElement>(null);
-  const [user, setUser] = useState<string>("");
+  const [isUser, setIsUser] = useState<string>("");
+  const [backendUrl, setBackendUrl] = useState<string>("");
   const [isLoaded, setIsLoaded] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [suggestions, setSuggestions] = useState<Question[]>([]);
@@ -36,71 +33,44 @@ export default function index() {
   useEffect(() => {
     const initialMessage: Message[] = [
       {
-        id: messages.length + 1,
         message:
-          "Selamat datang, saya IQA (INSTIKI Quick Assistant) siap melayani anda👋",
-      },
-      {
-        id: messages.length + 2,
-        message:
-          "Jika anda mahasiswa INSTIKI, silahkan kirimkan data Nama dan NIM anda terlebih dahulu.",
-      },
-      {
-        id: messages.length + 3,
-        message: "Contoh: 'Nama saya [nama anda] NIM [NIM anda]'",
-      },
-      {
-        id: messages.length + 4,
-        message:
-          "Namun, jika anda pengunjung, silahkan langsung ajukan pertanyaan anda di kolom di bawah ini😊",
+          "Selamat datang, silahkan isi pertanyaan anda di bawah ini, saya siap membantu anda 😊",
       },
     ];
 
     setMessages([...messages, ...initialMessage]);
     setIsLoaded(true);
     setSuggestions(initialQuestions.questions);
-    setUser(faker.person.firstName());
   }, []);
 
-  const handleMessageSubmit = (payload: string, title?: string) => {
+  const handleIntroSubmit = (backendUrl: string, username: string) => {
+    setBackendUrl(backendUrl);
+    setIsUser(username);
+  };
+
+  const handleMessageSubmit = (message: string) => {
     setIsSending(true);
     setNeedSuggestions(false);
 
-    let message = title ? title : payload;
-
     const newMessage: Message = {
-      id: messages.length + 1,
       message: message,
-      isUser: user,
+      isUser: isUser,
     };
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
     setIsLoaded(false);
 
     axios
-      .post(apiEndpoint.url, {
-        sender: user,
+      .post(backendUrl, {
+        username: isUser,
         message: message,
       })
       .then(function (response) {
-        const botMessage = response.data.map((item: any, index: number) => {
-          const messageData: Message = {
-            id: messages.length + index + 2,
-            message: item.text || undefined,
-            image: item.image || undefined,
-          };
-          if (item.buttons && item.buttons.length > 0) {
-            setNeedSuggestions(true);
-            setSuggestions(
-              item.buttons.map((button: any, index: number) => ({
-                id: index + 1,
-                title: button.title,
-                payload: button.payload,
-              }))
-            );
-          }
-          return messageData;
-        });
+        const botMessage = [
+          {
+            message: response.data.reply,
+          },
+        ];
         setMessages((prevMessages) => [...prevMessages, ...botMessage]);
         setIsLoaded(true);
         setIsSending(false);
@@ -111,12 +81,7 @@ export default function index() {
           {
             id: messages.length + 2,
             message:
-              "Mohon maaf, saat ini IQA mengalami gangguan, mohon doanya agar bisa segera pulih 🥲🙏",
-          },
-          {
-            id: messages.length + 3,
-            message:
-              "Jika membutuhkan informasi segera, silahkan menghubungi Information Center kami: https://wa.me/6281339822383",
+              "Mohon maaf, saat ini mengalami gangguan, mohon doanya agar bisa segera pulih 🥲🙏",
           },
         ];
         setMessages((prevMessages) => [...prevMessages, ...errorMessage]);
@@ -130,7 +95,7 @@ export default function index() {
       messageContainer.current.scrollTop =
         messageContainer.current.scrollHeight;
     }
-    // console.log(messages);
+    console.log(messages);
   }, [messages]);
 
   return (
@@ -149,50 +114,51 @@ export default function index() {
           <Lottie animationData={robot} loop={true} />
         </div>
         <h1 className="text-sm leading-6">
-          <b>Halo Civitas INSTIKI</b>
+          {isUser ? <b>Halo {isUser}</b> : <b>Selamat Datang di Gadget.id</b>}
           <br />
-          Saya IQA siap membantu anda😉
+          Saya siap membantu anda😉
         </h1>
       </motion.div>
-      <div className="bg-slate-50 w-full h-[25rem] rounded-[21px] relative overflow-hidden flex flex-col">
-        <motion.div
-          ref={messageContainer}
-          className="p-2 pb-5 w-full h-full overflow-y-auto flex flex-col"
-        >
-          {messages.map((msg) => (
-            <ChatBubble
-              isLoaded={true}
-              isUser={msg.isUser}
-              key={msg.id}
-              image={msg.image}
+      <div className="bg-slate-50 w-full h-[25rem] rounded-[21px] relative overflow-hidden">
+        {isUser && (
+          <div className="flex flex-col h-full">
+            <motion.div
+              ref={messageContainer}
+              className="p-2 pb-5 w-full h-full overflow-y-auto flex flex-col"
             >
-              {msg.message}
-            </ChatBubble>
-          ))}
-          {!isLoaded && (
-            <ChatBubble isLoaded={false} isUser={false} image={null}>
-              <Lottie animationData={textLoading} loop={true} />
-            </ChatBubble>
-          )}
-        </motion.div>
-        <div className="p-2 pt-3 w-full backdrop-blur-sm shadow-top bg-slate-50">
-          {needSuggestions && (
-            <div className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1">
-              {suggestions.map((suggestion) => (
-                <SuggestionPill
-                  key={suggestion.id}
-                  title={suggestion.title}
-                  payload={suggestion.payload}
-                  onMessageSubmit={handleMessageSubmit}
-                />
+              {messages.map((msg, id) => (
+                <ChatBubble isLoaded={true} isUser={msg.isUser} key={id}>
+                  {msg.message}
+                </ChatBubble>
               ))}
+              {!isLoaded && (
+                <ChatBubble isLoaded={false} isUser={false}>
+                  <Lottie animationData={textLoading} loop={true} />
+                </ChatBubble>
+              )}
+            </motion.div>
+            <div className="p-2 pt-3 w-full backdrop-blur-sm shadow-top bg-slate-50">
+              {needSuggestions && (
+                <div className="flex flex-wrap-reverse gap-2 justify-end items-end mb-2 mr-1">
+                  {suggestions.map((suggestion) => (
+                    <SuggestionPill
+                      key={suggestion.id}
+                      message={suggestion.message}
+                      onMessageSubmit={handleMessageSubmit}
+                    />
+                  ))}
+                </div>
+              )}
+              <ChatInput
+                isSending={isSending}
+                onMessageSubmit={handleMessageSubmit}
+              />
             </div>
-          )}
-          <ChatInput
-            isSending={isSending}
-            onMessageSubmit={handleMessageSubmit}
-          />
-        </div>
+          </div>
+        )}
+        <AnimatePresence>
+          {!isUser && <ChatIntro onIntroSubmit={handleIntroSubmit} />}
+        </AnimatePresence>
       </div>
     </motion.div>
   );

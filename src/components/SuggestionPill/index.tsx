@@ -1,5 +1,5 @@
 import React from "react";
-import { delay, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const item = {
   hidden: { opacity: 0, scale: 0.9 },
@@ -7,15 +7,14 @@ const item = {
 };
 
 const index: React.FC<{
-  onMessageSubmit: (message: string, title: string) => void;
-  title: string;
-  payload: string;
-}> = ({ onMessageSubmit, title, payload }) => {
+  onMessageSubmit: (message: string) => void;
+  message: string;
+}> = ({ onMessageSubmit, message }) => {
   const handleMessageSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    onMessageSubmit(payload, title);
+    onMessageSubmit(message);
   };
   return (
     <motion.button
@@ -25,7 +24,7 @@ const index: React.FC<{
       initial="hidden"
       animate="show"
     >
-      {title}
+      {message}
     </motion.button>
   );
 };

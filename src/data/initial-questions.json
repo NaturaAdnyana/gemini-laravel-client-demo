@@ -2,18 +2,11 @@
   "questions": [
     {
       "id": 1,
-      "title": "Tahapan registrasi",
-      "payload": "/registrasi"
+      "message": "Situs apa ini?"
     },
     {
       "id": 2,
-      "title": "Jadwal Perkuliahan",
-      "payload": "/jadwal_kuliah"
-    },
-    {
-      "id": 3,
-      "title": "Biaya Daftar Ulang",
-      "payload": "/biaya_daftar_ulang"
+      "message": "Produk hp Samsung"
     }
   ]
 }
