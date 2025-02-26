@@ -24,6 +24,7 @@ export default function index() {
   const messageContainer = useRef<HTMLDivElement>(null);
   const [isUser, setIsUser] = useState<string>("");
   const [backendUrl, setBackendUrl] = useState<string>("");
+  const [isAuth, setIsAuth] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [suggestions, setSuggestions] = useState<Question[]>([]);
@@ -46,6 +47,7 @@ export default function index() {
   const handleIntroSubmit = (backendUrl: string, username: string) => {
     setBackendUrl(backendUrl);
     setIsUser(username);
+    setIsAuth(true);
   };
 
   const handleMessageSubmit = (message: string) => {
@@ -95,12 +97,12 @@ export default function index() {
       messageContainer.current.scrollTop =
         messageContainer.current.scrollHeight;
     }
-    console.log(messages);
   }, [messages]);
 
   return (
     <motion.div
       className="modal-gradient mb-5 rounded-3xl p-1 w-full"
+      key="modal"
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0 }}
@@ -120,7 +122,7 @@ export default function index() {
         </h1>
       </motion.div>
       <div className="bg-slate-50 w-full h-[25rem] rounded-[21px] relative overflow-hidden">
-        {isUser && (
+        {isAuth ? (
           <div className="flex flex-col h-full">
             <motion.div
               ref={messageContainer}
@@ -155,10 +157,9 @@ export default function index() {
               />
             </div>
           </div>
+        ) : (
+          <ChatIntro onIntroSubmit={handleIntroSubmit} />
         )}
-        <AnimatePresence>
-          {!isUser && <ChatIntro onIntroSubmit={handleIntroSubmit} />}
-        </AnimatePresence>
       </div>
     </motion.div>
   );

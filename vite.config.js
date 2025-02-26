@@ -12,10 +12,10 @@ export default defineConfig({
         app: "./src/main.jsx",
       },
       output: {
-        entryFileNames: "instiki-chatbot-alpha.js",
+        entryFileNames: "chatbot-demo.js",
       },
     },
   },
-  base: "https://cdn.jsdelivr.net/gh/NaturaAdnyana/instiki-chatbot-client/dist/",
+  base: "https://cdn.jsdelivr.net/gh/NaturaAdnyana/gemini-laravel-client-demo/dist/",
   // plugins: [react()],
 });

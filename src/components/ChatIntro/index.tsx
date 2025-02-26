@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const index: React.FC<{
   onIntroSubmit: (backendUrl: string, username: string) => void;
@@ -19,13 +19,14 @@ const index: React.FC<{
 
   return (
     <motion.div
+      key="intro"
       className="absolute top-0 left-0 p-10 w-full h-full bg-white shadow-md rounded-[21px]"
       initial={{ opacity: 1, scale: 1 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{
-        top: "-100%",
-        transition: { delay: 0.3, duration: 0.5 },
-      }}
+      // exit={{
+      //   top: "-100%",
+      //   transition: { delay: 0.3, duration: 0.5 },
+      // }}
     >
       <div className="w-full h-full flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mt-5">Selamat datang di Gadget.id</h1>
