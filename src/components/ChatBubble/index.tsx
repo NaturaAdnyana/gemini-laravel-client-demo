@@ -1,8 +1,9 @@
 import React from "react";
 import Lottie from "lottie-react";
 import textLoading from "./../../assets/text-loading.json";
-import Linkify from "linkify-react";
 import { motion } from "framer-motion";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import "./index.css";
 
 const renderLink = ({ attributes, content }) => {
@@ -32,7 +33,7 @@ export default function index({ children, isUser, isLoaded }) {
       exit={{ opacity: 0, y: 50 }}
     >
       {isLoaded ? (
-        <Linkify options={{ render: renderLink }}>{children}</Linkify>
+        <Markdown remarkPlugins={[remarkGfm]}>{children}</Markdown>
       ) : (
         <Lottie className="w-12" animationData={textLoading} loop={true} />
       )}
